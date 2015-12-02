@@ -9,6 +9,7 @@ public class Estoque {
     private String descricao;
     private String tipo;  
     private int quantidade;
+    private String nome;
 
     public int getId() {
         return id;
@@ -72,5 +73,13 @@ public class Estoque {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+    
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

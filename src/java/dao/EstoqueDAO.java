@@ -21,8 +21,8 @@ public class EstoqueDAO {
     }
 
     public String Inserir(Estoque estoque) {
-        sql = "INSERT INTO `estoque` (fabricante,tipo_uni,preco_compra,preco,quantidade,descricao,tipo)"
-                + "VALUES(?,?,?,?,?,?,?)";        
+        sql = "INSERT INTO `estoque` (fabricante,tipo_uni,preco_compra,preco,quantidade,descricao,tipo,nome)"
+                + "VALUES(?,?,?,?,?,?,?,?)";        
         try {
             stmt = this.conexao.getConexaoMySQL().prepareStatement(sql);
             stmt.setString(1, estoque.getFabricante());
@@ -32,6 +32,7 @@ public class EstoqueDAO {
             stmt.setInt(5, estoque.getQuantidade());
             stmt.setString(6, estoque.getDescricao());
             stmt.setString(7, estoque.getTipo());
+            stmt.setString(8, estoque.getNome());
             stmt.execute();
             stmt.close();
             Message = "Registro inserido com sucesso!";  
@@ -45,8 +46,8 @@ public class EstoqueDAO {
     
     public String Editar(Estoque estoque) {
         sql = "UPDATE `estoque` SET fabricante = ? ,tipo_uni = ? , preco_compra = ? , preco = ?, quantidade = ?,"
-                + "descricao = ?, tipo = ?"
-                + "";        
+                + "descricao = ?, tipo = ?, nome = ?"
+                + " WHERE id = ?";        
         try {
             stmt = this.conexao.getConexaoMySQL().prepareStatement(sql);
             stmt.setString(1, estoque.getFabricante());
@@ -56,6 +57,8 @@ public class EstoqueDAO {
             stmt.setInt(5, estoque.getQuantidade());
             stmt.setString(6, estoque.getDescricao());
             stmt.setString(7, estoque.getTipo());
+            stmt.setString(8, estoque.getNome());
+            stmt.setInt(9, estoque.getId());
             stmt.execute();
             stmt.close();
             Message = "Registro atualizado com sucesso!";  
@@ -94,12 +97,13 @@ public class EstoqueDAO {
                 Estoque estoque = new Estoque();
                 estoque.setId(rs.getInt("id"));
                 estoque.setFabricante(rs.getString("fabricante"));
-                estoque.setTipo(rs.getString("tipo_uni"));
+                estoque.setTipo_uni(rs.getString("tipo_uni"));
                 estoque.setPreco_compra(rs.getDouble("preco_compra"));
                 estoque.setPreco(rs.getDouble("preco"));
                 estoque.setQuantidade(rs.getInt("quantidade"));
                 estoque.setDescricao(rs.getString("descricao"));
                 estoque.setTipo(rs.getString("tipo"));
+                estoque.setNome(rs.getString("nome"));
                 mylist.add(estoque);                
                 
             }            
@@ -120,12 +124,13 @@ public class EstoqueDAO {
                 +"CREATE TABLE IF NOT EXISTS estoque (\n"
                 + "`id` int(10) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key.',\n"
                 + "                `fabricante` varchar(100) NOT NULL DEFAULT 'N/A ' COMMENT 'Nome do fabricante.',\n"
-                + "                `tipo_uni` varchar(50) NOT NULL DEFAULT 'pç' COMMENT 'tipo de unidade.',\n"
+                + "                `tipo_uni` varchar(50) DEFAULT 'pç' COMMENT 'tipo de unidade.',\n"
                 + "                `preco_compra` varchar(50) NOT NULL DEFAULT '0.00' COMMENT 'preço da compra.',\n"
                 + "                `preco` varchar(50) NOT NULL DEFAULT '0.00' COMMENT 'preço final do produto.',\n"
                 + "                `quantidade` varchar(50) NOT NULL DEFAULT '0.00' COMMENT 'quantidade em estoque.',\n"
                 + "                `descricao` varchar(50) NOT NULL DEFAULT '0.00' COMMENT 'descricao do produto.',\n"
                 + "                `tipo` varchar(50) NOT NULL DEFAULT '0.00' COMMENT 'tipo do produto (exe:vesturario, equipamento,diversos).',\n"
+                + "                `nome` varchar(50) NOT NULL DEFAULT '' COMMENT 'tipo do produto (nome do produto).',\n"
                 + "PRIMARY KEY(id)"
                 + ")ENGINE=InnoDB AUTO_INCREMENT=1 CHARSET=utf8 COMMENT='Tabela Estoque';";
         try {

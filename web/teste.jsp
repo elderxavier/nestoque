@@ -35,33 +35,38 @@
         <p><%//out.println(ConexaoDB.statusConection()); %> </p>
         <p><%//out.println("teste finalizado"); %> </p>
         <% 
-            
+          
           
         EstoqueDAO dao = new EstoqueDAO();
+        //String cria = dao.Criar();
+        
         //out.println(dao.Criar());
         
         Estoque estoque = new Estoque();
         estoque.setDescricao("descricao");
-        estoque.setFabricante("fabricante");
+        estoque.setFabricante("fabricante 2");
+        estoque.setNome("uM NOME LEGAL");
         estoque.setPreco(200.0);
         estoque.setPreco_compra(201.00);
         estoque.setQuantidade(10);
         estoque.setTipo("tipo");
         estoque.setTipo_uni("tipo_uni");
+        estoque.setId(1);
         
         
-        for(int i = 0; i < 10; i ++){
+        /*for(int i = 0; i < 10; i ++){
             out.println(dao.Inserir(estoque));
-        }
-        //out.println(dao.Editar(estoque));
-        out.println(dao.Excluir("id", "=", "9"));
+        }*/
+        out.println(dao.Editar(estoque));
+        //out.println(dao.Excluir("id", "=", "9"));
         
-        
+        /*
         List<Estoque> mylist = new ArrayList();        
         mylist =  dao.Pesquisa("id", ">", "0");         
         for (Estoque name: mylist) {
             out.println(name.getId());
         }
+                    */
         %>
     </body>
 </html>
